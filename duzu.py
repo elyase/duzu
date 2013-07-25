@@ -105,7 +105,7 @@ def duzu10(Z=82, N=126, coeffs=np.array([0.7043, 17.7418, 16.2562, 37.5562, 53.9
             px = sqrt(pp[0]) + sqrt(pp[1])
             term[7] = qx[0] * qx[1] * (2 ** px)                 # QQ sph.
         else:                                                   # deformed
-            term[8] = sum(qx)                                   # QQ deform.
+            term[8] = qx[0] * qx[1]                             # QQ deform.
         term[4] = t * (1 - t) / (a * ra**3) + term[4]           # Wigner term
         condition = (N > Z, n2[0] == nuclei[0], n2[1] == nuclei[1])     # PAIRING
         term[9] = {
@@ -119,9 +119,9 @@ def duzu10(Z=82, N=126, coeffs=np.array([0.7043, 17.7418, 16.2562, 37.5562, 53.9
         }.get(condition, 0)
         term[1:] /= ra
         y[deformed] = np.dot(term, coeffs)
-
     binding_energy = y[0] if Z < 50 else max(y)                 # y[0]->spherical, y[1]->deformed
     mass_excess = Z * 7.28903 + N * 8.07138 - binding_energy
     return mass_excess
 
-print duzu10(82, 126)
+if __name__ == '__main__':
+    print duzu10(100, 150)
